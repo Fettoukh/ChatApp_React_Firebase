@@ -1,0 +1,50 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 0.25;
+  height: 100vh;
+  background-color: #2f3135;
+}
+
+.sidebar_profil {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #2f3135;
+  color: white;
+  border-bottom: 3px solid #26282c;
+}
+
+.sidebar_rooms {
+  flex: 1;
+  align-items: center;
+}
+
+.sidebar_roomsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #2f3135;
+  color: white;
+}
+
+.sidebar_addRoomIcon {
+  cursor: pointer;
+}
+
+.sidebar_addRoomIcon:hover {
+  color: grey;
+}
+
+.sideBar_roomsListHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2f3135;
+  color: white;
+  border-bottom: 3px solid #26282c;
+}

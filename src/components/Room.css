@@ -1,0 +1,18 @@
+.room:hover > h4 {
+  color: white;
+  background-color: #40464b;
+}
+
+.room > h4 {
+  display: flex;
+  padding-left: 15px;
+  align-items: center;
+  background-color: #2f3135;
+  color: gray;
+  cursor: pointer;
+}
+
+.room_hash {
+  font-size: 30px;
+  padding: 5px;
+}
