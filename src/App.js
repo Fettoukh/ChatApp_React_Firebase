@@ -24,6 +24,10 @@ function App() {
             displayName: authUser.displayName,
           },
         });
+      } else {
+        dispatch({
+          type: actionTypes.LOG_OUT,
+        });
       }
     });
     return () => {};
