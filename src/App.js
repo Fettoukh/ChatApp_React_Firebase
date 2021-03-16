@@ -1,13 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import "./App.css";
+import { useStateValue } from "./reactContext/StateProvider";
+import { actionTypes } from "./reactContext/reducer";
+import { auth } from "./firebase";
+import Login from "./components/Login";
 
 function App() {
+  const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      console.log("user is", authUser);
+      if (authUser) {
+        //the user is logged in
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: {
+            uid: authUser.uid,
+            photo: authUser.photoURL,
+            email: authUser.email,
+            displayName: authUser.displayName,
+          },
+        });
+      }
+    });
+    return () => {};
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <Sidebar />
-      <Chat />
+      {user ? (
+        <>
+          <Sidebar />
+          <Chat />
+        </>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 }
