@@ -16,7 +16,7 @@ function App() {
       if (authUser) {
         //the user is logged in
         dispatch({
-          type: actionTypes.SET_USER,
+          type: actionTypes.LOG_IN,
           user: {
             uid: authUser.uid,
             photo: authUser.photoURL,

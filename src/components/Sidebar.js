@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
-import { Avatar } from "@material-ui/core";
+import { Avatar, Button } from "@material-ui/core";
 import { Add, ExpandMore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import Room from "./Room";
+import { actionTypes } from "../reactContext/reducer";
+import { useStateValue } from "../reactContext/StateProvider";
+import db, { auth } from "../firebase";
+
 const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(9),
@@ -12,41 +16,75 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Sidebar() {
-  const [rooms, setRooms] = useState([
-    { name: "Gaming Room" },
-    { name: "Dev Room" },
-    { name: "Chill Room" },
-  ]);
+  const [{ user }, dispatch] = useStateValue();
+  const [rooms, setRooms] = useState([]);
+  const [roomToADD, setRoomToADD] = useState("");
+
+  useEffect(() => {
+    db.collection("rooms").onSnapshot((snapshot) =>
+      setRooms(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          room: doc.data(),
+        }))
+      )
+    );
+  }, []);
+
+  const handleAddRoom = () => {
+    if (roomToADD !== "") {
+      db.collection("rooms").add({
+        roomName: roomToADD,
+      });
+      setRoomToADD("");
+    }
+  };
+
   return (
     <div className="sidebar">
       {/* Profil */}
       <div className="sidebar_profil">
-        <Avatar
-          src="https://image.flaticon.com/icons/png/512/147/147144.png"
-          className={useStyles().large}
-        />
-        <h3>Fettoukh Mohamed Amine</h3>
+        <Avatar src={user.photo} className={useStyles().large} />
+        <h3>{user.displayName}</h3>
       </div>
 
       {/* Rooms */}
       <div className="sidebar_rooms">
         <div className="sidebar_roomsHeader">
-          <h4>Add a room</h4>
-          <Add className="sidebar_addRoomIcon" />
+          <h4>Add a room : </h4>
+          <input
+            placeholder={""}
+            value={roomToADD}
+            onChange={(e) => setRoomToADD(e.target.value)}
+          />
+          <Add
+            className="sidebar_addRoomIcon"
+            onClick={() => handleAddRoom()}
+          />
         </div>
         <div className="sidebar_roomsList">
           <div className="sideBar_roomsListHeader">
-            <h4>Rooms</h4>
-            <ExpandMore />
+            {/* <h4>Rooms</h4> */}
+            {/* <ExpandMore /> */}
           </div>
-          {rooms.map(({ name }) => (
-            <Room roomName={name} />
+          {rooms.map(({ id, room }) => (
+            <Room key={id} roomName={room.roomName} />
           ))}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="sidebar_footer"></div>
+      <div className="sidebar_footer">
+        <Button
+          onClick={() => {
+            if (window.confirm("Do you really want to log out ?")) {
+              auth.signOut();
+            }
+          }}
+        >
+          LOG OUT
+        </Button>
+      </div>
     </div>
   );
 }

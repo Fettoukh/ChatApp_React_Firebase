@@ -3,14 +3,14 @@ export const initialState = {
 };
 
 export const actionTypes = {
-  SET_USER: "SET_USER",
+  LOG_IN: "LOG_IN",
   LOG_OUT: "LOG_OUT",
 };
 
 const reducer = (state, action) => {
   console.log(action);
   switch (action.type) {
-    case actionTypes.SET_USER:
+    case actionTypes.LOG_IN:
       return {
         ...state,
         user: action.user,

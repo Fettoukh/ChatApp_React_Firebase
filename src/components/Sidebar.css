@@ -31,6 +31,14 @@
   color: white;
 }
 
+.sidebar_roomsHeader > input {
+  background: transparent;
+  border: none;
+  outline-width: 0;
+  color: white;
+  border-bottom: 1px solid white;
+}
+
 .sidebar_addRoomIcon {
   cursor: pointer;
 }
@@ -47,4 +55,11 @@
   background-color: #2f3135;
   color: white;
   border-bottom: 3px solid #26282c;
+}
+
+.sidebar_footer > button {
+  width: 100%;
+  background-color: red;
+  color: white;
+  font-weight: 800;
 }
