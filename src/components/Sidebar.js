@@ -21,14 +21,15 @@ function Sidebar() {
   const [roomToADD, setRoomToADD] = useState("");
 
   useEffect(() => {
-    db.collection("rooms").onSnapshot((snapshot) =>
+    db.collection("rooms").onSnapshot((snapshot) => {
+      console.log(snapshot);
       setRooms(
         snapshot.docs.map((doc) => ({
           id: doc.id,
           room: doc.data(),
         }))
-      )
-    );
+      );
+    });
   }, []);
 
   const handleAddRoom = () => {
@@ -63,12 +64,13 @@ function Sidebar() {
           />
         </div>
         <div className="sidebar_roomsList">
-          <div className="sideBar_roomsListHeader">
+          <div className="sidebar_roomsListHeader">
             {/* <h4>Rooms</h4> */}
             {/* <ExpandMore /> */}
           </div>
+          {/* //Modified */}
           {rooms.map(({ id, room }) => (
-            <Room key={id} roomName={room.roomName} />
+            <Room key={id} roomId={id} roomName={room.roomName} />
           ))}
         </div>
       </div>

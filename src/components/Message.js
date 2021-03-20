@@ -1,14 +1,25 @@
+import { Avatar } from "@material-ui/core";
 import React from "react";
+import { useStateValue } from "../reactContext/StateProvider";
 import "./Message.css";
+// Modified
+function Message({ timestamp, message, messageUser }) {
+  const [{ user }, dispatch] = useStateValue();
 
-function Message({ message, user }) {
   return (
     <div>
-      <div className="message">
+      <div
+        className={`message ${
+          user.displayName === messageUser.displayName ? "myMessage" : ""
+        } `}
+      >
+        <Avatar src={messageUser.photo} />
         <div className="message_info">
           <h4>
-            {user}
-            <span className="message_infoTimestamp">3/11/2021 - 3:24</span>
+            {messageUser.displayName}{" "}
+            <span className="message_infoTimestamp">
+              {/* {new Date(timestamp?.toDate()).toUTCString()} */}
+            </span>
           </h4>
           <p>{message}</p>
         </div>

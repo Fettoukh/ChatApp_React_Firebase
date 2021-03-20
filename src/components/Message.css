@@ -10,7 +10,11 @@
   font-size: 15px;
 }
 
-.message__info {
+.myMessage {
+  margin-left: auto;
+}
+
+.message_info {
   margin-left: 20px;
 }
 
